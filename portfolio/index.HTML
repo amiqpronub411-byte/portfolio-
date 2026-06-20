@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Bahrul Amiq | Portofolio Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           CORE STYLES & CYBERPUNK VARIABLES
+           ========================================== */
+        :root {
+            --bg-main: #030611;
+            --bg-card: rgba(15, 22, 38, 0.7);
+            --accent: #00f2ff;
+            --accent-purple: #a855f7;
+            --accent-gradient: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --glass-border: rgba(0, 242, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* PREMIUM SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 100px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* DYNAMIC INTERACTIVE NETWORK CANVAS BG */
+        #network-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none; opacity: 0.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 120px 0; position: relative; }
+        span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .heading {
+            text-align: center; font-size: 3rem; font-weight: 800; margin-bottom: 15px;
+            letter-spacing: -1px; text-shadow: 0 0 40px rgba(0, 242, 255, 0.1);
+        }
+        .section-desc { text-align: center; color: var(--text-secondary); margin-bottom: 60px; font-size: 1rem; }
+
+        /* TECH BADGE SYSTEM */
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px;
+            background: rgba(0, 242, 255, 0.05); border: 1px solid var(--glass-border);
+            color: var(--accent); border-radius: 100px; font-size: 0.85rem; font-weight: 700;
+            margin-bottom: 28px; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+        }
+
+        /* MODERN CALL-TO-ACTION BUTTONS */
+        .cta-group { display: flex; gap: 16px; }
+        .btn {
+            padding: 16px 36px; border-radius: 14px; font-weight: 700; font-size: 0.95rem;
+            text-decoration: none; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .btn-primary { background: var(--accent-gradient); color: #fff; box-shadow: 0 4px 25px rgba(0, 210, 255, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 210, 255, 0.5); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.02); color: #fff; border: 1px solid var(--card-border); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--accent); }
+
+        /* PREMIUM GLASSMORPHISM NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 22px 0;
+            background: rgba(6, 9, 19, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 1000;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.9rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: 0.5px; }
+        .nav-links { display: flex; list-style: none; gap: 36px; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-primary); text-shadow: 0 0 15px #fff; }
+
+        /* HERO MATRIX ARCHITECTURE */
+        .hero { display: flex; align-items: center; justify-content: space-between; gap: 60px; padding: 180px 0 100px 0; min-height: 85vh; }
+        .hero-content { flex: 1.2; }
+        .hero-content h3 { font-size: 1.5rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 8px; }
+        .hero-content h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 24px; font-weight: 800; letter-spacing: -2px; }
+        .hero-content p { color: var(--text-secondary); font-size: 1.15rem; line-height: 1.7; margin-bottom: 40px; max-width: 540px; }
+        
+        .social-icons { display: flex; gap: 16px; margin-bottom: 40px; }
+        .social-icons a {
+            width: 50px; height: 50px; background: var(--bg-card); border: 1px solid var(--card-border);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.3rem; text-decoration: none; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .social-icons a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px rgba(0,242,255,0.2); }
+
+        .hero-img-container { position: relative; flex: 0.8; display: flex; justify-content: center; }
+        .hero-img {
+            width: 370px; height: 370px; border-radius: 30% 70% 60% 40% / 40% 40% 60% 60%;
+            overflow: hidden; border: 3px solid rgba(0, 242, 255, 0.3);
+            animation: morphing 9s infinite ease-in-out; z-index: 2;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.15);
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        @keyframes morphing {
+            0% { border-radius: 30% 70% 60% 40% / 40% 40% 60% 60%; }
+            50% { border-radius: 60% 40% 40% 60% / 50% 60% 40% 50%; }
+            100% { border-radius: 30% 70% 60% 40% / 40% 40% 60% 60%; }
+        }
+
+        /* DYNAMIC SKILLS INTEL SYSTEM */
+        .about { background: #070b18; border-top: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .about-container { max-width: 950px; margin: 0 auto; }
+        .about-lead { font-size: 1.3rem; line-height: 1.8; color: #e2e8f0; text-align: center; margin-bottom: 70px; font-weight: 400; }
+        
+        .skills-container h3 { text-align: center; font-size: 1.6rem; margin-bottom: 40px; font-weight: 700; color: var(--text-primary); }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        /* 3D PARALLAX CARD CAPABILITIES */
+        .card-perspective-wrapper { perspective: 1000px; }
+        .skill-card {
+            background: var(--bg-card); border: 1px solid var(--card-border);
+            padding: 40px 30px; border-radius: 24px; position: relative;
+            transform-style: preserve-3d; transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .card-glare {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5; border-radius: 24px; background: transparent;
+        }
+        .skill-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 24px; display: inline-block; transform: translateZ(25px); }
+        .skill-card h4 { font-size: 1.35rem; margin-bottom: 12px; font-weight: 700; transform: translateZ(20px); }
+        .skill-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; transform: translateZ(15px); }
+        .skill-card:hover { border-color: rgba(0, 242, 255, 0.4); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+
+        /* TIMELINE GRAPHICS ENGINE */
+        .timeline { position: relative; max-width: 900px; margin: 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: rgba(0, 242, 255, 0.15); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        .timeline-item { padding: 20px 40px; position: relative; width: 50%; }
+        .timeline-item.left { left: 0; }
+        .timeline-item.right { left: 50%; }
+        .timeline-content { padding: 35px; background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .time-tag { display: inline-block; font-size: 0.85rem; color: var(--accent); font-weight: 700; margin-bottom: 12px; font-family: monospace; }
+        .sub-title { display: block; font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 14px; font-style: italic; }
+        .timeline-content p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* KREDENSIAL / CERTIFICATES HUBS */
+        .certificates { background: #070b18; }
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .cert-card {
+            background: var(--bg-main); border: 1px solid var(--card-border);
+            border-radius: 24px; overflow: hidden; display: flex; flex-direction: column;
+            cursor: pointer; transform-style: preserve-3d; position: relative;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .cert-img-box {
+            width: 100%; height: 210px; position: relative; overflow: hidden;
+            background: #0d1322; display: flex; align-items: center; justify-content: center;
+        }
+        .cert-img-box img { width: 100%; height: 100%; object-fit: cover; z-index: 2; position: relative; transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .cert-img-box img.hidden { display: none !important; }
+        .fallback-icon { position: absolute; font-size: 4rem; color: rgba(0, 242, 255, 0.12); z-index: 1; }
+        
+        .zoom-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 6, 17, 0.85); z-index: 3; display: flex;
+            align-items: center; justify-content: center; gap: 8px;
+            color: #fff; font-weight: 600; font-size: 0.95rem; opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cert-card:hover .zoom-overlay { opacity: 1; }
+        .cert-card:hover .cert-img-box img { transform: scale(1.08); }
+
+        .cert-info-content { padding: 26px; display: flex; flex-direction: column; flex-grow: 1; transform: translateZ(20px); }
+        .cert-issuer { font-size: 0.8rem; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 8px; }
+        .cert-card h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 700; color: #fff; }
+        .cert-name { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+        .cert-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04); }
+        .status-valid { font-size: 0.85rem; color: #10b981; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+        .cert-card:hover { border-color: rgba(0, 242, 255, 0.5); box-shadow: 0 20px 40px rgba(0, 242, 255, 0.15); }
+
+        /* LIGHTBOX SYSTEM FOR EXPANDED VIEW */
+        .lightbox {
+            display: none; position: fixed; z-index: 9999; padding-top: 60px;
+            left: 0; top: 0; width: 100%; height: 100%; overflow: auto;
+            background-color: rgba(3, 6, 17, 0.96); backdrop-filter: blur(12px);
+        }
+        .lightbox-content {
+            margin: auto; display: block; width: 85%; max-width: 850px;
+            border-radius: 16px; border: 1px solid var(--glass-border);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+            animation: zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .lightbox-close:hover { color: var(--accent); }
+        #lightbox-caption { margin: auto; display: block; width: 80%; text-align: center; color: #fff; padding: 20px 0; font-size: 1.1rem; font-weight: 600; }
+
+        /* CONTACT SYSTEM ARCHITECTURE */
+        .contact-wrapper { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+        .contact-card {
+            background: var(--bg-card); border: 1px solid var(--card-border);
+            border-radius: 20px; padding: 45px 30px; text-align: center;
+            flex: 1; min-width: 290px; max-width: 360px; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .contact-card i { font-size: 2.6rem; color: var(--accent); margin-bottom: 24px; }
+        .contact-card h4 { margin-bottom: 10px; font-size: 1.3rem; font-weight: 700; }
+        .contact-card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 24px; }
+        .contact-link { color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .contact-link:hover i { transform: translateX(5px); }
+        .contact-static { font-size: 0.85rem; color: var(--accent); background: rgba(0, 242, 255, 0.05); padding: 8px 18px; border-radius: 100px; font-weight: 600; border: 1px solid rgba(0,242,255,0.1); }
+        .contact-card:hover { transform: translateY(-8px); border-color: rgba(0, 242, 255, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+
+        footer { padding: 40px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.04); color: var(--text-secondary); font-size: 0.9rem; }
+        .menu-toggle { display: none; }
+
+        /* MOBILE ADVANCED RESPONSIVENESS */
+        @media (max-width: 992px) {
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 150px; gap: 40px; }
+            .cta-group, .social-icons { justify-content: center; }
+            .hero-content h1 { font-size: 3.3rem; }
+            .hero-img { width: 310px; height: 310px; }
+        }
+
+        @media (max-width: 768px) {
+            .heading { font-size: 2.3rem; }
+            .menu-toggle { display: block; cursor: pointer; }
+            .menu-toggle .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background: #fff; transition: 0.3s; }
+            .nav-links {
+                position: absolute; top: 100%; left: -100%; width: 100%;
+                flex-direction: column; background: rgba(6, 9, 19, 0.98);
+                backdrop-filter: blur(20px); text-align: center; padding: 40px 0;
+                transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { margin: 18px 0; }
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 55px; padding-right: 0; }
+            .timeline-item.right { left: 0; }
+            .lightbox-content { width: 95%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CORE NETWORK GARIS LATAR BELAKANG -->
+    <canvas id="network-canvas"></canvas>
+
+    <!-- NAVIGATION HUB -->
+    <nav class="navbar">
+        <div class="nav-container container">
+            <a href="#" class="logo">MBA<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#experience">Pengalaman</a></li>
+                <li><a href="#certificates">Sertifikat</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION PANEL -->
+    <section id="home" class="hero container">
+        <div class="hero-content">
+            <span class="badge"><i class="fas fa-bolt"></i> Computer Network Specialist</span>
+            <h3>Halo, Saya</h3>
+            <h1>Muhammad <br>Bahrul Amiq</h1>
+            <p>Lulusan Teknik Komputer & Jaringan yang berfokus pada infrastruktur jaringan, instalasi perangkat, dan solusi teknologi modern.</p>
+            <div class="social-icons">
+                <a href="mailto:bahrulamiq192007@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://wa.me/628884965594" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="cta-group">
+                <a href="#contact" class="btn btn-primary">Hubungi Saya</a>
+                <a href="#certificates" class="btn btn-secondary">Lihat Sertifikat</a>
+            </div>
+        </div>
+        <div class="hero-img-container">
+            <div class="hero-img">
+                <img src="foto-saya.jpg" alt="Muhammad Bahrul Amiq" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500';">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT CAPABILITIES SECTION -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="heading">Tentang <span>Saya</span></h2>
+            <div class="about-container">
+                <p class="about-lead">Saya merupakan lulusan SMK Ar Raoudhoh jurusan Teknik Komputer dan Jaringan yang memiliki semangat belajar tinggi dan mudah beradaptasi. Fokus utama saya adalah membangun karier profesional di bidang teknologi informasi dan jaringan komputer.</p>
+                
+                <div class="skills-container">
+                    <h3>Keahlian Utama</h3>
+                    <div class="skills-grid">
+                        <div class="card-perspective-wrapper">
+                            <div class="skill-card dynamic-tilt">
+                                <div class="card-glare"></div>
+                                <i class="fas fa-network-wired"></i>
+                                <h4>Pemasangan Jaringan</h4>
+                                <p>Instalasi LAN/WAN, routing, switching, dan konfigurasi perangkat jaringan.</p>
+                            </div>
+                        </div>
+                        <div class="card-perspective-wrapper">
+                            <div class="skill-card dynamic-tilt">
+                                <div class="card-glare"></div>
+                                <i class="fas fa-server"></i>
+                                <h4>Network Installation</h4>
+                                <p>Troubleshooting koneksi, manajemen kabel, dan pemeliharaan infrastruktur IT.</p>
+                            </div>
+                        </div>
+                        <div class="card-perspective-wrapper">
+                            <div class="skill-card dynamic-tilt">
+                                <div class="card-glare"></div>
+                                <i class="fas fa-user-check"></i>
+                                <h4>Profesionalitas</h4>
+                                <p>Manajemen waktu yang disiplin serta kemampuan kerja sama tim yang solid.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE EXPERIENCE ARCHIVE -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="heading">Riwayat & <span>Pengalaman</span></h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="time-tag">Juli 2025 - Agustus 2025</span>
+                        <h3>Pelatihan Berbasis Kompetensi (PBK)</h3>
+                        <span class="sub-title">UPT Balai Latihan Kerja Pasuruan</span>
+                        <p>Mengikuti pelatihan intensif program "Pemasangan Jaringan Komputer" secara Off-JT dan dinyatakan LULUS dengan kompetensi penuh.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="time-tag">26 April 2025</span>
+                        <h3>Juara 3 Scientist Competition 2025</h3>
+                        <span class="sub-title">Universitas Wijaya Putra</span>
+                        <p>Kompetisi karya inovasi ilmiah dengan tema: <em>"Inovasi Berbasis Teknologi = Solusi Gen Z untuk mengatasi Kesehatan Mental SDG 3"</em>.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="time-tag">Okt 2023 - Jan 2024</span>
+                        <h3>Praktek Kerja Lapangan (Magang)</h3>
+                        <span class="sub-title">Agen JNE Beji / Wonokoyo</span>
+                        <p>Bertanggung jawab dalam manajemen logistik pengiriman paket, melayani sistem administrasi konsumen, pelacakan armada barang, serta penanganan komplain.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="time-tag">2022 - 2025</span>
+                        <h3>Pendidikan Formal</h3>
+                        <span class="sub-title">SMK Ar-Roudhoh Beji, Pasuruan</span>
+                        <p>Mendalami konsentrasi keahlian Teknik Komputer dan Jaringan (TKJ). Lulus resmi pada tahun 2025.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREDENTIALS HUB (CERTIFICATES) -->
+    <section id="certificates" class="certificates">
+        <div class="container">
+            <h2 class="heading">Kredensial & <span>Sertifikat Resmi</span></h2>
+            <p class="section-desc">Klik gambar atau kartu sertifikat untuk memperbesar tampilan</p>
+            <div class="cert-grid">
+                
+                <div class="card-perspective-wrapper">
+                    <div class="cert-card dynamic-tilt" onclick="openLightbox(this)">
+                        <div class="card-glare"></div>
+                        <div class="cert-img-box">
+                            <img src="sertifikat BNSP.jpg" alt="Sertifikat BNSP" class="cert-img-target">
+                            <div class="fallback-icon"><i class="fas fa-ribbon"></i></div>
+                            <div class="zoom-overlay"><i class="fas fa-search-plus"></i> Klik untuk Zoom</div>
+                        </div>
+                        <div class="cert-info-content">
+                            <span class="cert-issuer">BNSP × LSP BLK Singosari</span>
+                            <h3>Sertifikat Kompetensi Kerja</h3>
+                            <p class="cert-name"><strong>Bidang:</strong> Pemasangan Jaringan Komputer</p>
+                            <div class="cert-footer">
+                                <span class="status-valid"><i class="fas fa-check-circle"></i> Valid s/d Agustus 2028</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-perspective-wrapper">
+                    <div class="cert-card dynamic-tilt" onclick="openLightbox(this)">
+                        <div class="card-glare"></div>
+                        <div class="cert-img-box">
+                            <img src="sertifikat BLK.jpg" alt="Sertifikat BLK Pasuruan" class="cert-img-target">
+                            <div class="fallback-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="zoom-overlay"><i class="fas fa-search-plus"></i> Klik untuk Zoom</div>
+                        </div>
+                        <div class="cert-info-content">
+                            <span class="cert-issuer">Pemerintah Provinsi Jawa Timur</span>
+                            <h3>Sertifikat Pelatihan PBK</h3>
+                            <p class="cert-name">Program Pelatihan Pemasangan Jaringan Komputer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-perspective-wrapper">
+                    <div class="cert-card dynamic-tilt" onclick="openLightbox(this)">
+                        <div class="card-glare"></div>
+                        <div class="cert-img-box">
+                            <img src="sertifikat Scientist Competition.jpg" alt="Sertifikat Juara 3 Scientist Competition" class="cert-img-target">
+                            <div class="fallback-icon"><i class="fas fa-award"></i></div>
+                            <div class="zoom-overlay"><i class="fas fa-search-plus"></i> Klik untuk Zoom</div>
+                        </div>
+                        <div class="cert-info-content">
+                            <span class="cert-issuer">Universitas Wijaya Putra</span>
+                            <h3>Juara 3 Scientist Competition 2025</h3>
+                            <p class="cert-name">Inovasi Berbasis Teknologi Solusi Gen Z</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-perspective-wrapper">
+                    <div class="cert-card dynamic-tilt" onclick="openLightbox(this)">
+                        <div class="card-glare"></div>
+                        <div class="cert-img-box">
+                            <img src="sertifikat  Prakrin.jpg" alt="Sertifikat Praktik Kerja Lapangan" class="cert-img-target">
+                            <div class="fallback-icon"><i class="fas fa-box-open"></i></div>
+                            <div class="zoom-overlay"><i class="fas fa-search-plus"></i> Klik untuk Zoom</div>
+                        </div>
+                        <div class="cert-info-content">
+                            <span class="cert-issuer">PT. Jalur Nugraha Ekakurir (JNE)</span>
+                            <h3>Sertifikat PKL (Magang)</h3>
+                            <p class="cert-name">Pengalaman Operasional & Customer Service JNE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-perspective-wrapper">
+                    <div class="cert-card dynamic-tilt" onclick="openLightbox(this)">
+                        <div class="card-glare"></div>
+                        <div class="cert-img-box">
+                            <img src="sertifikat Artificial Inttelligence .jpg" alt="Sertifikat Artificial Intelligence" class="cert-img-target">
+                            <div class="fallback-icon"><i class="fas fa-brain"></i></div>
+                            <div class="zoom-overlay"><i class="fas fa-search-plus"></i> Klik untuk Zoom</div>
+                        </div>
+                        <div class="cert-info-content">
+                            <span class="cert-issuer">Course Completion</span>
+                            <h3>Sertifikat Artificial Intelligence</h3>
+                            <p class="cert-name">Pemahaman Dasar Teori & Inovasi Teknologi AI</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CINEMATIC LIGHTBOX ELEMENT -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" class="lightbox-content" src="" alt="Zoomed Certificate">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <!-- TERMINAL CONTACT CONTROLLER -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="heading">Mari <span>Terhubung</span></h2>
+            <div class="contact-wrapper">
+                <div class="contact-card">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <h4>Email Resmi</h4>
+                    <p>bahrulamiq192007@gmail.com</p>
+                    <a href="mailto:bahrulamiq192007@gmail.com" class="contact-link">Kirim Email <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="contact-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h4>WhatsApp Harian</h4>
+                    <p>+62 888-4965-594</p>
+                    <a href="https://wa.me/628884965594" target="_blank" class="contact-link">Mulai Chat <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h4>Domisili Tetap</h4>
+                    <p>Pasuruan, Jawa Timur, Indonesia 67155</p>
+                    <span class="contact-static">Siap Bekerja Pasuruan/Sekitarnya</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CENTRAL CONSOLE FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Muhammad Bahrul Amiq. Ditulis dengan standar kode premium elegan.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT CORRECTIONS ENGINE -->
+    <script>
+        // 1. PROCEDURAL DYNAMIC INTERACTIVE NETWORK CANVAS BG
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let dots = [];
+        const maxDots = 65;
+        const mouse = { x: null, y: null, radius: 150 };
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            dots = [];
+            for(let i=0; i<maxDots; i++) {
+                dots.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 1.5 + 1
+                });
+            }
+        }
+        initCanvas();
+        window.addEventListener('resize', initCanvas);
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+        function drawNetwork() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.4)';
+            
+            dots.forEach(dot => {
+                dot.x += dot.vx; dot.y += dot.vy;
+                if(dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
+                if(dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
+                
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI*2);
+                ctx.fill();
+
+                if(mouse.x && mouse.y) {
+                    let dx = dot.x - mouse.x; let dy = dot.y - mouse.y;
+                    let dist = Math.hypot(dx, dy);
+                    if(dist < mouse.radius) {
+                        let alpha = (1 - dist/mouse.radius) * 0.15;
+                        ctx.strokeStyle = `rgba(0, 242, 255, ${alpha})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath(); ctx.moveTo(dot.x, dot.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+                    }
+                }
+
+                dots.forEach(target => {
+                    if(dot === target) return;
+                    let dx = dot.x - target.x; let dy = dot.y - target.y;
+                    let dist = Math.hypot(dx, dy);
+                    if(dist < 100) {
+                        let alpha = (1 - dist/100) * 0.08;
+                        ctx.strokeStyle = `rgba(0, 242, 255, ${alpha})`;
+                        ctx.lineWidth = 0.4;
+                        ctx.beginPath(); ctx.moveTo(dot.x, dot.y); ctx.lineTo(target.x, target.y); ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(drawNetwork);
+        }
+        drawNetwork();
+
+        // 2. IMAGE FALLBACK AUTO SYSTEM
+        document.querySelectorAll('.cert-img-target').forEach(img => {
+            img.onerror = function() { this.classList.add('hidden'); };
+        });
+
+        // 3. ADVANCED 3D PARALLAX MATH STYLING WITH GLARE LAYER EFFECT
+        const cards = document.querySelectorAll('.dynamic-tilt');
+        if (window.innerWidth > 992) {
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                    const xc = rect.width / 2; const yc = rect.height / 2;
+                    
+                    card.style.transform = `rotateX(${(yc - y) / 10}deg) rotateY(${(x - xc) / 10}deg) translateY(-5px)`;
+                    
+                    const glare = card.querySelector('.card-glare');
+                    if(glare) {
+                        glare.style.background = `radial-gradient(circle at ${(x / rect.width) * 100}% ${(y / rect.height) * 100}%, rgba(0, 242, 255, 0.12), transparent 75%)`;
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
+                    const glare = card.querySelector('.card-glare');
+                    if(glare) glare.style.background = 'transparent';
+                });
+            });
+        }
+
+        // 4. PRESERVED ORIGINAL CERTIFICATE LIGHTBOX ENGINE
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        window.openLightbox = function(cardElement) {
+            const imgElement = cardElement.querySelector('.cert-img-target');
+            const titleText = cardElement.querySelector('h3').innerText;
+            if (imgElement.classList.contains('hidden')) {
+                alert(`Gambar fisik untuk "${titleText}" belum dimasukkan ke folder proyek Anda.`);
+                return;
+            }
+            lightbox.style.display = "block";
+            lightboxImg.src = imgElement.src;
+            lightboxCaption.innerHTML = titleText;
+        }
+
+        window.closeLightbox = function() { lightbox.style.display = "none"; }
+
+        // 5. NAV MENU ACTIVE HIGHLIGHT MANAGER ON SCROLL
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) link.classList.add('active');
+            });
+        });
+
+        // 6. TOGGLE MOBILE HAMBURGER MENU SYSTEM
+        const menuToggle = document.querySelector('#mobile-menu');
+        const navLinksContainer = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => { navLinksContainer.classList.remove('active'); });
+        });
+    </script>
+</body>
+</html>
